@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <p>Number of wins: <span class="wins">0</span> </p>
+    <p>Number of losses: <span class="losses">0</span> </p>
+    <p>Number of Guesses remaining: <span class="guesses">12</span> </p>
+    <p>Your guesses so far: <span class="lettersGuessed"></span> </p>
+    <script>
+        var wins = 0
+        var losses = 0
+        var guesses = 12;           // Amount of Lives 
+        // var total;           // Total of correct guesses
+        var picked;          //selected letter
+        var lettersSelected = [];  // Selected letter
+        var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+            'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
+            't', 'u', 'v', 'w', 'x', 'y', 'z']; //Array of letters
+var alphabet = "abcdefghijklmnopqrstuvwxyz".split("")
+        // Classes . / ID #
+
+        function updateValues() {
+            document.querySelector(".wins").innerHTML = wins
+            document.querySelector(".losses").innerHTML = losses
+            document.querySelector(".guesses").innerHTML = guesses
+            document.querySelector(".lettersGuessed").innerHTML = lettersSelected
+        }
+        updateValues()
+        function pickRandom() {
+            picked = alphabet[Math.floor(Math.random() * alphabet.length)];
+            console.log(picked)
+        }
+        pickRandom()
+
+
+
+        document.onkeyup = function (event) {
+            var userGuess = event.key;
+            if (lettersSelected.indexOf(userGuess) === -1) {
+                lettersSelected.push(userGuess)
+            } else {
+                alert("You've selected the same character.")
+                return
+            }
+
+            if (userGuess === picked) {
+                wins++
+                guesses = 12
+                updateValues()
+                console.log("You win!")
+                console.log("Number of wins " + wins)
+                pickRandom()
+            } else if (guesses === 0) {
+                guesses = 12;
+                updateValues()
+                console.log("Game over.");
+                pickRandom();
+                losses++
+            } else if (userGuess != picked) {
+                updateValues()
+                console.log("Guess again!");
+                console.log("Lives remaining " + guesses--);
+            }
+
+        }
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>

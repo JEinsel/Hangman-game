@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <P>Letters correct <span class="word"></span></P>
+    <p>Number of wins: <span class="wins">0</span> </p>
+    <p>Number of losses: <span class="losses">0</span> </p>
+    <p>Number of Guesses remaining: <span class="guesses">12</span> </p>
+    <p>Your guesses so far: <span class="lettersGuessed"></span> </p>
+    <script>
+        var wins = 0
+        var losses = 0
+        var guesses = 12;           // Amount of Lives 
+        // var total;           // Total of correct guesses
+        var picked;          //selected letter
+        var correctLetters = [];
+        var lettersSelected = [];  // Selected letter
+        var alphabet = [];
+        var words = ['cervine', 'bovine', 'dog', 'vulpine', 'fox', 'canine']; //Array of letters
+        // var alphabet = "abcdefghijklmnopqrstuvwxyz".split("")
+        // Classes . / ID #
+        
+        function updateValues() {
+            document.querySelector(".wins").innerHTML = wins
+            document.querySelector(".losses").innerHTML = losses
+            document.querySelector(".guesses").innerHTML = guesses
+            document.querySelector(".lettersGuessed").innerHTML = lettersSelected
+            document.querySelector(".word")
+        }
+        updateValues()
+        function pickRandom() {
+            picked = words[Math.floor(Math.random() * words.length)];
+            console.log(picked)
+        }
+        pickRandom()
+        
+        // alphabet = picked.split("")
+
+
+        document.onkeyup = function (event) {
+            var userGuess = event.key;
+            for (var i = 0; i < picked.length; i++) {
+                var char = picked[i]
+                if (userGuess === char) {
+                    correctLetters[i]=userGuess
+                }
+            }
+            document.querySelector(".word").innerHTML = correctLetters
+            console.log(correctLetters)
+
+            if (picked === correctLetters.join("")) {
+                alert("You won!")
+                wins++
+                pickRandom()
+                correctLetters = [];
+                guesses = 12;
+                updateValues()
+            } else {
+                guesses--
+                // alert("Wrong")
+                updateValues()
+            }
+            if (guesses <= 0) {
+                alert("You lost");
+                losses++;
+                correctLetters = [];
+                guesses = 12;
+                pickRandom();
+                updateValues();
+            }
+            // if (lettersSelected.indexOf(userGuess) === -1) {
+            //     lettersSelected.push(userGuess)
+            // } else {
+            //     alert("You've selected the same character.")
+            //     return
+            // }
+
+            // if (userGuess === alphabet) {
+            //     wins++
+            //     guesses = 12
+
+            //     updateValues()
+            //     console.log("You win!")
+            //     console.log("Number of wins " + wins)
+            //     pickRandom()
+            // } else if (guesses === 0) {
+            //     guesses = 12;
+            //     updateValues()
+            //     console.log("Game over.");
+            //     pickRandom();
+            //     losses++
+            // } else if (userGuess != alphabet) {
+            //     updateValues()
+            //     console.log("Guess again!");
+            //     console.log("Lives remaining " + guesses--);
+            // }
+
+        }
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>
